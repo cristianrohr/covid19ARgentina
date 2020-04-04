@@ -194,8 +194,10 @@ shinyUI(
                         "Actualmente trabajando en la Plataforma de Ciencia de Datos en ", tags$a(href="http://heritas.com.ar", "Héritas"),tags$br(),
                         tags$br(),tags$h4("Contacto"),
                         "cristianrohr768@gmail.com",tags$br(),
-                        "https://www.linkedin.com/in/cristianrohrbio", tags$br(),
-                        "http://cristianrohr.github.io/", tags$br(),
+                        icon("linkedin"), tags$a(href="https://www.linkedin.com/in/cristianrohrbio", "https://www.linkedin.com/in/cristianrohrbio"), tags$br(),
+                        icon("github"),  tags$a(href="http://cristianrohr.github.io/", "http://cristianrohr.github.io/"), tags$br(),
+                        icon("github"),  tags$a(href="https://github.com/cristianrohr", "https://github.com/cristianrohr"), tags$br(),
+                        
 
                         tags$br(),tags$h4("Sugerencias"), 
                         "Para información más actualizada sobre la pandemia puede visitar los siguientes sitios:", tags$br(),

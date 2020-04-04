@@ -1,4 +1,4 @@
-Link para acceder al [Dashboard covid19 Argentina](https://cristianrohr.shinyapps.io/covid19_Argentina/)
+Link para acceder al [Dashboard COVID19 Argentina](https://cristianrohr.shinyapps.io/covid19_Argentina/)
 
 ![](demo_covid19Argentina.gif)
 
@@ -7,10 +7,17 @@ Link para acceder al [Dashboard covid19 Argentina](https://cristianrohr.shinyapp
 Este repositorio se basa en el repositorio [eparker12/nCoV_tracker](https://github.com/eparker12/nCoV_tracker).
 
 ## Sobre el dashboard
-La idea es ofrecer información para la República Argentina, la cual pueda ser analizada a modo de 'timeline'.
+La idea es ofrecer información para la República Argentina, la cual pueda ser analizada a modo de 'timeline', con vistas en modo mapa y con gráficos de casos a nivel de provincia, estandarizada cada 100000 habitantes. La información utilizada se encuentra en el siguiente [repo](https://github.com/cristianrohr/covid19ARgentina_stats).
 
-## Modificado
-Cristian Rohr, Msc. Ciencia de Datos Universidad de Granada, Lic. Bioinformática Universidad Nacional de Entre Ríos, Heritas @ Rosario Argentina, Marzo - Abril 2020
+Además cuenta con datos a nivel mundial, agregados por países, obtenidos de la información proporcionada por la [Universidad John Hopkins](https://hub.jhu.edu/novel-coronavirus-information/).
+
+## Autor
+**Cristian Rohr**. Msc. Ciencia de Datos Universidad de Granada y Lic. Bioinformática Universidad Nacional de Entre Ríos.
+
+**Contacto**:
+
++ cristianrohr768@gmail.com
++ https://www.linkedin.com/in/cristianrohrbio
 
 ## Version Original
 Dr Edward Parker, The Vaccine Centre, London School of Hygiene & Tropical Medicine
