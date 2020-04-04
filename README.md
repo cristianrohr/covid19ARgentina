@@ -1,6 +1,7 @@
 Link para acceder al [Dashboard covid19 Argentina](https://cristianrohr.shinyapps.io/covid19_Argentina/)
 
-![covid19ARgentina](/home/crohr/repos/covid19ARgentina/images/demo_covid19Argentina.gif  "demo Dashboard covid19ARgentina")
+![](demo_covid19Argentina.gif)
+
 
 ## Acerca de este repositorio
 Este repositorio se basa en el repositorio [eparker12/nCoV_tracker](https://github.com/eparker12/nCoV_tracker).
