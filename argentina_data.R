@@ -1,7 +1,8 @@
 ## Autor: Cristian Rohr
 ## Los datos para casos a nivel de provincias fueron obtenidos originalmente del siguiente repositorio
 ## https://github.com/martingra/COVID19Argentina
-## Sin embargo lo dejo de actualizar por lo tanto comenze a llevar mi propio registro
+## Sin embargo lo dejo de actualizar por lo tanto comenze a llevar mi propio registro en el siguiente repo
+## https://github.com/cristianrohr/covid19ARgentina_stats
 
 
 # load libraries
@@ -32,24 +33,25 @@ update_argentina = function(input_df, tag) {
 }
 
 
-# load latest Covid-2019 data: confirmed cases
-#argentina_cases <- as.data.frame(data.table::fread("https://raw.githubusercontent.com/martingra/COVID19Argentina/master/data/time_series_19-covid-Confirmed.csv"))
-argentina_cases <- as.data.frame(data.table::fread("input_data/time_series_19-covid-Confirmed_argentina.csv"))
+# confirmed cases
+argentina_cases <- as.data.frame(data.table::fread("https://raw.githubusercontent.com/cristianrohr/covid19ARgentina_stats/master/data/time_series_19-covid-Confirmed_argentina.csv"))
+#argentina_cases <- as.data.frame(data.table::fread("input_data/time_series_19-covid-Confirmed_argentina.csv"))
 argentina_cases[is.na(argentina_cases)]=0
 total_cases_argentina <- sum(argentina_cases[,ncol(argentina_cases)])
 argentina_cases = update_argentina(argentina_cases, "cases")
 if (total_cases_argentina != sum(argentina_cases[nrow(argentina_cases),1:(ncol(argentina_cases)-1)])) { stop(paste0("Error: incorrect processing - total counts do not match")) }
 
-# load latest Covid-2019 data: deaths
-#argentina_deaths <- as.data.frame(data.table::fread("https://raw.githubusercontent.com/martingra/COVID19Argentina/master/data/time_series_19-covid-Deaths.csv"))
-argentina_deaths <- as.data.frame(data.table::fread("input_data/time_series_19-covid-Deaths_argentina.csv"))
+# deaths
+argentina_deaths <- as.data.frame(data.table::fread("https://raw.githubusercontent.com/cristianrohr/covid19ARgentina_stats/master/data/time_series_19-covid-Deaths_argentina.csv"))
+#argentina_deaths <- as.data.frame(data.table::fread("input_data/time_series_19-covid-Deaths_argentina.csv"))
 argentina_deaths[is.na(argentina_deaths)]=0
 total_deaths_argentina <- sum(argentina_deaths[,ncol(argentina_deaths)])
 argentina_deaths = update_argentina(argentina_deaths, "deaths")
 if (total_deaths_argentina!=sum(argentina_deaths[nrow(argentina_deaths),1:(ncol(argentina_deaths)-1)])) { stop(paste0("Error: incorrect processing - total counts do not match")) }
 
-# load latest Covid-2019 data: recovered
-argentina_rec <- as.data.frame(data.table::fread("input_data/time_series_19-covid-Recovered_argentina.csv"))
+# recovered
+argentina_rec <- as.data.frame(data.table::fread("https://raw.githubusercontent.com/cristianrohr/covid19ARgentina_stats/master/data/time_series_19-covid-Recovered_argentina.csv"))
+#argentina_rec <- as.data.frame(data.table::fread("input_data/time_series_19-covid-Recovered_argentina.csv"))
 argentina_rec[is.na(argentina_rec)]=0
 total_rec_argentina <- sum(argentina_rec[,ncol(argentina_rec)])
 argentina_rec = update_argentina(argentina_rec, "recovered")
@@ -77,12 +79,6 @@ write.csv(argentina_merge, "input_data/argentina_data.csv")
 argentina <- readOGR(dsn = "input_data/mapa_argentina/", layer = "ARG_adm1", use_iconv=TRUE, encoding='UTF-8', stringsAsFactors=FALSE)
 countries = read.csv("input_data/countries_codes_and_coordinates.csv")
 provincias <- argentina@data
-
-# check all jhu country names have corresponding country data
-# argentina_country_list = names(argentina_merge)[grepl("_cases", names(argentina_merge))] %>% str_replace_all(., "_cases", "") 
-# if (all(argentina_country_list %in% countries$argentina_ID)==FALSE) {
-#   stop(paste0("Error: mapping data lacking for the following countries: ",argentina_country_list[(argentina_country_list %in% countries$argentina_ID)==FALSE]))
-# }
 
 collated_data_argentina = NULL
 # loop to add new data for each new situation report
@@ -171,7 +167,7 @@ collated_data_argentina$new_recovered[collated_data_argentina$new_recovered<0] =
 # add active case data (total cases - deaths/recovered)
 collated_data_argentina$active_cases = collated_data_argentina$cases - (collated_data_argentina$deaths + collated_data_argentina$recovered)
 
-# update country names
+# update provinces names
 provincias$NAME_1
 collated_data_argentina[collated_data_argentina$argentina_ID == "Buenos.Aires","argentina_ID"] <- "Buenos Aires"
 collated_data_argentina[collated_data_argentina$argentina_ID == "Capital.Federal","argentina_ID"] <- "Ciudad de Buenos Aires"

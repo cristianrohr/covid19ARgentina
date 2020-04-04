@@ -35,7 +35,9 @@ poblacion <- poblacion[poblacion$year == "2020",]
 # Seteo de variables útiles
 # --------------------------------------------------------------
 # set mapping colour
-covid_col = "#6db69c"
+#covid_col = "#6db69c"
+covid_col = "#FF0000"
+
 
 
 ### ------------------------------------
@@ -134,7 +136,7 @@ cv_large_countries = cv_large_countries[order(cv_large_countries$alpha3),]
 
 # create plotting parameters for map
 bins = c(0,0.01,0.1,0.5,1,10,50, 500)
-cv_pal <- colorBin("viridis", domain = cv_large_countries$per100k, bins = bins)
+cv_pal <- colorBin("Accent", domain = cv_large_countries$per100k, bins = bins)
 plot_map <- worldcountry[worldcountry$id %in% cv_large_countries$alpha3, ]
 # creat cv base map 
 basemap = leaflet(plot_map) %>% 
@@ -164,6 +166,7 @@ cv_aggregated$region = "Global"
 cv_aggregated$date = as.Date(cv_aggregated$date,"%Y-%m-%d")
 # assign colours to countries to ensure consistency between plots 
 cls = rep(c(brewer.pal(8,"Dark2"), brewer.pal(12, "Set3"), brewer.pal(10, "Paired"), brewer.pal(8,"Set2"), brewer.pal(9, "Set1"), brewer.pal(8, "Accent"),  brewer.pal(9, "Pastel1"),  brewer.pal(8, "Pastel2")),3)
+#cls = rep(c(brewer.pal(8,"Set2"), brewer.pal(9, "Pastel1"),  brewer.pal(8, "Pastel2"), brewer.pal(9, "Set1"), brewer.pal(8, "Accent"), brewer.pal(10, "Paired"), brewer.pal(8,"Dark2"), brewer.pal(12, "Set3")),3)
 cls_names = c(as.character(unique(cv_cases$country)), as.character(unique(cv_cases_continent$continent)),"Global")
 country_cols = cls[1:length(cls_names)]
 names(country_cols) = cls_names
@@ -236,8 +239,8 @@ cv_large_countries_arg = cv_large_countries_arg[order(cv_large_countries_arg$arg
 
 argentina@data <- left_join(argentina@data,cv_large_countries_arg, by = c("NAME_1" = "argentina_ID"))
 
-bins_argentina = c(0,0.01,0.1,0.5,1,5,50)
-cv_pal_argentina <- colorBin("viridis", domain = argentina@data$per100k, bins = bins_argentina)
+bins_argentina = c(0,0.01,0.1,0.5,1,5,50,500)
+cv_pal_argentina <- colorBin("Accent", domain = argentina@data$per100k, bins = bins_argentina)
 plot_map_argentina <- argentina[argentina$NAME_1 %in% cv_large_countries_arg$argentina_ID, ]
 
 arg.center <- countries[countries$country == "Argentina", c("latitude", "longitude")]
@@ -254,7 +257,21 @@ basemap_argentina = leaflet(plot_map_argentina) %>%
     addLegend("bottomright", pal = cv_pal_argentina, values = ~cv_large_countries_arg$per100k,
             title = "<small>Casos acumulados cada 100,000</small>") #%>%
 
+
+# sum cv case counts by date
+cv_aggregated_argentina = aggregate(cv_cases_argentina$cases, by=list(Category=cv_cases_argentina$date), FUN=sum)
+names(cv_aggregated_argentina) = c("date", "cases")
+
+# add variable for new cases in last 24 hours
+for (i in 1:nrow(cv_aggregated_argentina)) { 
+  if (i==1) { cv_aggregated_argentina$new[i] = 0 }
+  if (i>1) { cv_aggregated_argentina$new[i] = cv_aggregated_argentina$cases[i] - cv_aggregated_argentina$cases[i-1] }
+}
+
 # add plotting region
+cv_aggregated_argentina$date = as.Date(cv_aggregated_argentina$date,"%Y-%m-%d")
+# add plotting region
+cv_aggregated_argentina$region <- "País"
 # assign colours to provinces to ensure consistency between plots 
 cls_prov = c(brewer.pal(8,"Dark2"), brewer.pal(10, "Paired"), brewer.pal(12, "Set3"))
 cls_names_prov = c(as.character(unique(cv_cases_argentina$argentina_ID)))

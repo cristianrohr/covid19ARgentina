@@ -335,9 +335,9 @@ shinyServer(function(input, output, session) {
     paste0(prettyNum(sum(reactive_db()$cases), big.mark=","), " casos")
   })
   
-  # output$reactive_case_count_argentina <- renderText({
-  #   paste0(prettyNum(sum(reactive_db_argentina()$cases), big.mark=","), " casos")
-  # })
+  output$reactive_case_count_argentina <- renderText({
+    paste0(prettyNum(sum(reactive_db_argentina()$cases), big.mark=","), " casos")
+  })
   
   output$reactive_death_count <- renderText({
     paste0(prettyNum(sum(reactive_db()$death), big.mark=","), " muertes")
@@ -347,16 +347,20 @@ shinyServer(function(input, output, session) {
     paste0(prettyNum(sum(reactive_db_argentina()$death), big.mark=","), " muertes")
   })
   
+  output$reactive_recovered_count_arg <- renderText({
+    paste0(prettyNum(sum(reactive_db_argentina()$recovered), big.mark=","), " recuperados")
+  })
+  
   output$reactive_recovered_count <- renderText({
     paste0(prettyNum(sum(reactive_db()$recovered), big.mark=","), " recuperados")
   })
   
-  output$reactive_active_count <- renderText({
-    paste0(prettyNum(sum(reactive_db()$active_cases), big.mark=","), " casos activos")
+  output$reactive_active_count_arg <- renderText({
+    paste0(prettyNum(sum(reactive_db_argentina()$active_cases), big.mark=","), " casos activos")
   })
   
-  output$reactive_case_count_Argentina <- renderText({
-    paste0("Argentina: ", prettyNum(sum(subset(reactive_db(), country=="Argentina")$cases), big.mark=","))
+  output$reactive_active_count <- renderText({
+    paste0(prettyNum(sum(reactive_db()$active_cases), big.mark=","), " casos activos")
   })
   
   output$reactive_country_count <- renderText({
@@ -369,7 +373,13 @@ shinyServer(function(input, output, session) {
     paste0(valorusar, " nuevos en las últimas 24 horas")
   })
   
+  output$reactive_new_cases_24h_arg <- renderText({
+    valor <- (cv_aggregated_argentina %>% filter(date == input$plot_date_argentina & region=="País"))$new
+    valorusar <- format(valor ,big.mark=",",scientific=FALSE)
+    paste0(valorusar, " nuevos en las últimas 24 horas")
+  })
   
+
   
   # ----------------------------------------------------
   # Mapa Argentina
@@ -478,6 +488,10 @@ shinyServer(function(input, output, session) {
   
   output$cumulative_plot <- renderPlot({
     cumulative_plot(cv_aggregated, input$plot_date)
+  })
+  
+  output$cumulative_plot_arg <- renderPlot({
+    cumulative_plot(cv_aggregated_argentina, input$plot_date_argentina)
   })
   
   # update region selections

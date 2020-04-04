@@ -5,8 +5,8 @@ account: cristianrohr
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2044372
-bundleId: 2960379
+bundleId: 2968786
 url: https://cristianrohr.shinyapps.io/covid19_Argentina/
-when: 1585848508.10598
+when: 1586018007.85917
 asMultiple: FALSE
 asStatic: FALSE
