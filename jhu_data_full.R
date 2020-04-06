@@ -24,6 +24,7 @@ update_jhu = function(input_df, tag) {
   input_df$Country[input_df$Country=="Cabo Verde"] = "CapeVerde"
   input_df$Country[input_df$Country=="Timor-Leste"] = "TimorLeste"
   input_df$Country[input_df$Country=="Guinea-Bissau"] = "GuineaBissau"
+  
   input_df$Country = input_df$Country %>% str_replace_all(., " ", "") 
   dates = names(input_df)[which(names(input_df)=="1/22/20"):ncol(input_df)]
   input_df = input_df %>% 
@@ -45,6 +46,7 @@ update_jhu = function(input_df, tag) {
 jhu_cases <- as.data.frame(data.table::fread("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"))
 jhu_cases[is.na(jhu_cases)]=0
 total_cases <- sum(jhu_cases[,ncol(jhu_cases)])
+#jhu_cases<- jhu_cases[!(jhu_cases$`Country/Region` == "South Sudan"),]
 jhu_cases = update_jhu(jhu_cases, "cases")
 if (total_cases!=sum(jhu_cases[nrow(jhu_cases),1:(ncol(jhu_cases)-1)])) { stop(paste0("Error: incorrect processing - total counts do not match")) }
 
@@ -52,6 +54,7 @@ if (total_cases!=sum(jhu_cases[nrow(jhu_cases),1:(ncol(jhu_cases)-1)])) { stop(p
 jhu_deaths <- as.data.frame(data.table::fread("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"))
 jhu_deaths[is.na(jhu_deaths)]=0
 total_deaths <- sum(jhu_deaths[,ncol(jhu_deaths)])
+#jhu_deaths<- jhu_deaths[!(jhu_deaths$`Country/Region` == "South Sudan"),]
 jhu_deaths = update_jhu(jhu_deaths, "deaths")
 if (total_deaths!=sum(jhu_deaths[nrow(jhu_deaths),1:(ncol(jhu_deaths)-1)])) { stop(paste0("Error: incorrect processing - total counts do not match")) }
 
@@ -59,6 +62,7 @@ if (total_deaths!=sum(jhu_deaths[nrow(jhu_deaths),1:(ncol(jhu_deaths)-1)])) { st
 jhu_rec <- as.data.frame(data.table::fread("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv"))
 jhu_rec[is.na(jhu_rec)]=0
 total_rec <- sum(jhu_rec[,ncol(jhu_rec)])
+#jhu_rec<- jhu_rec[!(jhu_rec$`Country/Region` == "South Sudan"),]
 jhu_rec = update_jhu(jhu_rec, "recovered")
 if (total_rec!=sum(jhu_rec[nrow(jhu_rec),1:(ncol(jhu_rec)-1)])) { stop(paste0("Error: incorrect processing - total counts do not match")) }
 
