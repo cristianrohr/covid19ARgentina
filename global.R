@@ -77,14 +77,19 @@ cv_cases$activeper1M = as.numeric(format(round(cv_cases$active_cases/(cv_cases$p
 
 
 # add variable for days since 100th case and 10th death and 1th death
-cv_cases$days_since_case100 = cv_cases$days_since_death10 = 0
+cv_cases$days_since_case100 <- 0
+cv_cases$days_since_case10 <- 0
+cv_cases$days_since_death10 <- 0
+cv_cases$days_since_death1 <- 0
 for (i in 1:length(unique(cv_cases$country))) {
   country_name = as.character(unique(cv_cases$country))[i]
   country_db = subset(cv_cases, country==country_name)
   country_db$days_since_case100[country_db$cases>=100] = 1:sum(country_db$cases>=100)
+  country_db$days_since_case10[country_db$cases>=10] = 1:sum(country_db$cases>=10)
   country_db$days_since_death10[country_db$deaths>=10] = 1:sum(country_db$deaths>=10)
   country_db$days_since_death1[country_db$deaths>=1] = 1:sum(country_db$deaths>=1)
   cv_cases$days_since_case100[cv_cases$country==country_name] = country_db$days_since_case100
+  cv_cases$days_since_case10[cv_cases$country==country_name] = country_db$days_since_case10
   cv_cases$days_since_death10[cv_cases$country==country_name] = country_db$days_since_death10
   cv_cases$days_since_death1[cv_cases$country==country_name] = country_db$days_since_death1
 }
@@ -104,21 +109,26 @@ write.csv(cv_today %>% select(c(country, date, update, cases, new_cases, deaths,
                                 recovered, new_recovered, active_cases, 
                                 per100k, newper100k, activeper100k,
                                 per1M, newper1M, activeper1M,
-                                days_since_case100, days_since_death10, days_since_death1)), "input_data/coronavirus_today.csv")
+                                days_since_case100, days_since_case10, days_since_death10, days_since_death1)), "input_data/coronavirus_today.csv")
 
 # aggregate at continent level
 cv_cases_continent = subset(cv_cases, !is.na(continent_level)) %>% select(c(cases, new_cases, deaths, new_deaths, date, continent_level)) %>% group_by(continent_level, date) %>% summarise_each(funs(sum)) %>% data.frame()
 
 # add variable for days since 100th case and 10th death
-cv_cases_continent$days_since_case100 = cv_cases_continent$days_since_death10 = 0
+cv_cases_continent$days_since_case100 <- 0
+cv_cases_continent$days_since_case10 <- 0
+cv_cases_continent$days_since_death10 <- 0
+cv_cases_continent$days_since_death1 <- 0
 cv_cases_continent$continent = cv_cases_continent$continent_level
 for (i in 1:length(unique(cv_cases_continent$continent))) {
   continent_name = as.character(unique(cv_cases_continent$continent))[i]
   continent_db = subset(cv_cases_continent, continent==continent_name)
   continent_db$days_since_case100[continent_db$cases>=100] = 1:sum(continent_db$cases>=100)
+  continent_db$days_since_case10[continent_db$cases>=10] = 1:sum(continent_db$cases>=10)
   continent_db$days_since_death10[continent_db$deaths>=10] = 1:sum(continent_db$deaths>=10)
   continent_db$days_since_death1[continent_db$deaths>=1] = 1:sum(continent_db$deaths>=1)
   cv_cases_continent$days_since_case100[cv_cases_continent$continent==continent_name] = continent_db$days_since_case100
+  cv_cases_continent$days_since_case10[cv_cases_continent$continent==continent_name] = continent_db$days_since_case10
   cv_cases_continent$days_since_death10[cv_cases_continent$continent==continent_name] = continent_db$days_since_death10
   cv_cases_continent$days_since_death1[cv_cases_continent$continent==continent_name] = continent_db$days_since_death1
 }
@@ -146,7 +156,8 @@ basemap = leaflet(plot_map) %>%
     overlayGroups = c("2019-COVID (activos)", "2019-COVID (nuevos)", "2019-COVID (acumulados)"),
     options = layersControlOptions(collapsed = FALSE)) %>% 
   hideGroup(c("2019-COVID (nuevos)", "2019-COVID (acumulados)"))  %>%
-  addProviderTiles(providers$CartoDB.Positron) %>%
+  #addProviderTiles(providers$CartoDB.Positron) %>%
+  addProviderTiles(providers$CartoDB.Voyager) %>%
   fitBounds(~-100,-50,~80,80) %>%
   addLegend("bottomright", pal = cv_pal, values = ~cv_large_countries$per100k,
             title = "<small>Casos activos cada 100,000</small>") #%>%
@@ -170,7 +181,8 @@ cls = rep(c(brewer.pal(8,"Dark2"), brewer.pal(12, "Set3"), brewer.pal(10, "Paire
 cls_names = c(as.character(unique(cv_cases$country)), as.character(unique(cv_cases_continent$continent)),"Global")
 country_cols = cls[1:length(cls_names)]
 names(country_cols) = cls_names
-
+# Override Argentina
+country_cols['Argentina'] <- "#5995da"
 
 
 ### ------------------------------------
@@ -205,14 +217,19 @@ cv_cases_argentina$activeper1M = as.numeric(format(round(cv_cases_argentina$acti
 
 
 # add variable for days since 100th case and 10th death and 1th death
-cv_cases_argentina$days_since_case100 = cv_cases_argentina$days_since_death10 = 0
+cv_cases_argentina$days_since_case100 <- 0
+cv_cases_argentina$days_since_case10 <- 0
+cv_cases_argentina$days_since_death10 <- 0 
+cv_cases_argentina$days_since_death1 <- 0
 for (i in 1:length(unique(cv_cases_argentina$argentina_ID))) {
   country_name = as.character(unique(cv_cases_argentina$argentina_ID))[i]
   country_db = subset(cv_cases_argentina, argentina_ID==country_name)
   country_db$days_since_case100[country_db$cases>=100] = 1:sum(country_db$cases>=100)
+  country_db$days_since_case10[country_db$cases>=10] = 1:sum(country_db$cases>=10)
   country_db$days_since_death10[country_db$deaths>=10] = 1:sum(country_db$deaths>=10)
   country_db$days_since_death1[country_db$deaths>=1] = 1:sum(country_db$deaths>=1)
   cv_cases_argentina$days_since_case100[cv_cases_argentina$argentina_ID==country_name] = country_db$days_since_case100
+  cv_cases_argentina$days_since_case10[cv_cases_argentina$argentina_ID==country_name] = country_db$days_since_case10
   cv_cases_argentina$days_since_death10[cv_cases_argentina$argentina_ID==country_name] = country_db$days_since_death10
   cv_cases_argentina$days_since_death1[cv_cases_argentina$argentina_ID==country_name] = country_db$days_since_death1
 }
@@ -230,7 +247,7 @@ write.csv(cv_today_argentina %>% select(c(argentina_ID, date, update, cases, new
                                           recovered, new_recovered, active_cases, 
                                           per100k, newper100k, activeper100k,
                                           per1M, newper1M, activeper1M,
-                                          days_since_case100, days_since_death10, days_since_death1)), "input_data/coronavirus_today_argentina.csv")
+                                          days_since_case100, days_since_case10, days_since_death10, days_since_death1)), "input_data/coronavirus_today_argentina.csv")
 
 # Mapa
 cv_large_countries_arg = cv_today_argentina %>% filter(argentina_ID %in% argentina@data$NAME_1)
@@ -253,7 +270,8 @@ basemap_argentina = leaflet(plot_map_argentina) %>%
     overlayGroups = c("2019-COVID (acumulados)", "2019-COVID (nuevos)"),
     options = layersControlOptions(collapsed = FALSE)) %>% 
   hideGroup(c("2019-COVID (nuevos)"))  %>%
-  addProviderTiles(providers$CartoDB.Positron) %>%
+  #addProviderTiles(providers$CartoDB.Positron) %>%
+  addProviderTiles(providers$CartoDB.Voyager) %>%
     addLegend("bottomright", pal = cv_pal_argentina, values = ~cv_large_countries_arg$per100k,
             title = "<small>Casos acumulados cada 100,000</small>") #%>%
 

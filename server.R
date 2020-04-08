@@ -38,7 +38,8 @@ new_cases_plot = function(cv_aggregated, plot_date) {
 }
 
 # function to plot new cases by region
-country_cases_plot = function(cv_cases, start_point=c("Fecha", "Día del caso 100", "Día de la 10ma muerte")) {
+country_cases_plot = function(cv_cases, start_point=c("Fecha", "Día del caso 100", "Día del caso 10", 
+                                                      "Día de la 10ma muerte", "Día de la 1ra muerte")) {
   if (start_point=="Fecha") {
     
     g <- plot_ly(cv_cases, x = ~date, y = ~new_outcome, type = 'bar', color = ~region, 
@@ -61,6 +62,20 @@ country_cases_plot = function(cv_cases, start_point=c("Fecha", "Día del caso 10
     g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
+  if (start_point=="Día del caso 10") {
+    cv_cases = subset(cv_cases, days_since_case10>0)
+    
+    g <- ggplot(cv_cases, aes(x = days_since_case10, y = new_outcome, fill = region,
+                              text = paste0("Day ",days_since_case10, "\n", region, ": ",new_outcome)))+
+      xlab("Días desde el caso 10")
+    g1 <- g +
+      geom_bar(position="stack", stat="identity") +
+      ylab("nuevos casos") + theme_bw() +
+      scale_fill_manual(values=country_cols) +
+      theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
+    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+  }
+  
   if (start_point=="Día de la 10ma muerte") {
     cv_cases = subset(cv_cases, days_since_death10>0)
     
@@ -74,10 +89,25 @@ country_cases_plot = function(cv_cases, start_point=c("Fecha", "Día del caso 10
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
     g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
+  
+  if (start_point=="Día de la 1ra muerte") {
+    cv_cases = subset(cv_cases, days_since_death1>0)
+    
+    g <- ggplot(cv_cases, aes(x = days_since_death1, y = new_outcome, fill = region,
+                              text = paste0("Day ",days_since_death1, "\n", region, ": ",new_outcome))) +
+      xlab("Días desde la 1ra muerte")
+    g1 <- g +
+      geom_bar(position="stack", stat="identity") +
+      ylab("nuevos casos") + theme_bw() +
+      scale_fill_manual(values=country_cols) +
+      theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
+    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+  }
   g
 }
 
-country_cases_plot_prov = function(cv_cases, start_point=c("Fecha", "Día del caso 100", "Día de la 10ma muerte")) {
+country_cases_plot_prov = function(cv_cases, start_point=c("Fecha", "Día del caso 100", "Día del caso 10", 
+                                                           "Día de la 10ma muerte", "Día de la 1ra muerte")) {
   if (start_point=="Fecha") {
     
     g <- plot_ly(cv_cases, x = ~date, y = ~new_outcome, type = 'bar', color = ~region) %>%
@@ -99,6 +129,20 @@ country_cases_plot_prov = function(cv_cases, start_point=c("Fecha", "Día del ca
     g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
+  if (start_point=="Día del caso 10") {
+    cv_cases = subset(cv_cases, days_since_case10>0)
+    
+    g <- ggplot(cv_cases, aes(x = days_since_case10, y = new_outcome, fill = region,
+                              text = paste0("Day ",days_since_case10, "\n", region, ": ",new_outcome)))+
+      xlab("Días desde el caso 10")
+    g1 <- g +
+      geom_bar(position="stack", stat="identity") +
+      ylab("nuevos casos") + theme_bw() +
+      #scale_fill_manual(values=country_cols) +
+      theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
+    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+  }
+  
   if (start_point=="Día de la 10ma muerte") {
     cv_cases = subset(cv_cases, days_since_death10>0)
     
@@ -112,6 +156,20 @@ country_cases_plot_prov = function(cv_cases, start_point=c("Fecha", "Día del ca
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
     g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
+  
+  if (start_point=="Día de la 1ra muerte") {
+    cv_cases = subset(cv_cases, days_since_death1>0)
+    
+    g <- ggplot(cv_cases, aes(x = days_since_death1, y = new_outcome, fill = region,
+                              text = paste0("Day ",days_since_death1, "\n", region, ": ",new_outcome))) +
+      xlab("Días desde la 1ra muerte")
+    g1 <- g +
+      geom_bar(position="stack", stat="identity") +
+      ylab("nuevos casos") + theme_bw() +
+      # scale_fill_manual(values=country_cols) +
+      theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
+    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+  }
   g
 }
 
@@ -119,7 +177,8 @@ country_cases_plot_prov = function(cv_cases, start_point=c("Fecha", "Día del ca
 
 # function to plot cumulative cases by region
 country_cases_cumulative = function(cv_cases, 
-                                    start_point=c("Fecha", "Día del caso 100", "Día de la 10ma muerte")) {
+                                    start_point=c("Fecha", "Día del caso 100", "Día del caso 10", 
+                                                  "Día de la 10ma muerte", "Día de la 1ra muerte")) {
   if (start_point=="Fecha") {
     
     g <- plot_ly(cv_cases, x = ~date, y = ~outcome, type = 'scatter', mode = 'lines+markers', color = ~region, 
@@ -140,6 +199,18 @@ country_cases_cumulative = function(cv_cases,
     g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
+  if (start_point=="Día del caso 10") {
+    cv_cases = subset(cv_cases, days_since_case10>0)
+    g = ggplot(cv_cases, aes(x = days_since_case10, y = outcome, colour = region, group = 1,
+                             text = paste0("Day ", days_since_case10,"\n", region, ": ",outcome))) +
+      xlab("Días desde el caso 10")
+    g1 = g + geom_line(alpha=0.8) + geom_point(size = 1, alpha = 0.8) +
+      ylab("casos acumulados") + theme_bw() + 
+      scale_colour_manual(values=country_cols) +
+      theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
+    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+  }
+  
   if (start_point=="Día de la 10ma muerte") {
     cv_cases = subset(cv_cases, days_since_death10>0)
     g = ggplot(cv_cases, aes(x = days_since_death10, y = outcome, colour = region, group = 1,
@@ -152,11 +223,24 @@ country_cases_cumulative = function(cv_cases,
     g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
+  if (start_point=="Día de la 1ra muerte") {
+    cv_cases = subset(cv_cases, days_since_death1>0)
+    g = ggplot(cv_cases, aes(x = days_since_death1, y = outcome, colour = region, group = 1,
+                             text = paste0("Day ", days_since_death1,"\n", region, ": ",outcome))) +
+      xlab("Días desde la 1ra muerte")
+    g1 = g + geom_line(alpha=0.8) + geom_point(size = 1, alpha = 0.8) +
+      ylab("casos acumulados") + theme_bw() + 
+      scale_colour_manual(values=country_cols) +
+      theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
+    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+  }
+  
   g
 }
 
 country_cases_cumulative_prov = function(cv_cases, 
-                                    start_point=c("Fecha", "Día del caso 100", "Día de la 10ma muerte")) {
+                                    start_point=c("Fecha", "Día del caso 100", "Día del caso 10", 
+                                                  "Día de la 10ma muerte", "Día de la 1ra muerte")) {
   if (start_point=="Fecha") {
     
     g <- plot_ly(cv_cases, x = ~date, y = ~outcome, type = 'scatter', mode = 'lines+markers', color = ~region) %>%
@@ -174,6 +258,17 @@ country_cases_cumulative_prov = function(cv_cases,
     g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
+  if (start_point=="Día del caso 10") {
+    cv_cases = subset(cv_cases, days_since_case10>0)
+    g = ggplot(cv_cases, aes(x = days_since_case10, y = outcome, colour = region, group = 1,
+                             text = paste0("Day ", days_since_case10,"\n", region, ": ",outcome))) +
+      xlab("Días desde el caso 10")
+    g1 = g + geom_line(alpha=0.8) + geom_point(size = 1, alpha = 0.8) +
+      ylab("casos acumulados") + theme_bw() + 
+      theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
+    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+  }
+  
   if (start_point=="Día de la 10ma muerte") {
     cv_cases = subset(cv_cases, days_since_death10>0)
     g = ggplot(cv_cases, aes(x = days_since_death10, y = outcome, colour = region, group = 1,
@@ -185,11 +280,23 @@ country_cases_cumulative_prov = function(cv_cases,
     g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
+  if (start_point=="Día de la 1ra muerte") {
+    cv_cases = subset(cv_cases, days_since_death1>0)
+    g = ggplot(cv_cases, aes(x = days_since_death1, y = outcome, colour = region, group = 1,
+                             text = paste0("Day ", days_since_death1,"\n", region, ": ",outcome))) +
+      xlab("Días desde la 1ra muerte")
+    g1 = g + geom_line(alpha=0.8) + geom_point(size = 1, alpha = 0.8) +
+      ylab("casos acumulados") + theme_bw() + 
+      theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
+    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+  }
+  
   g
 }
 
 # function to plot cumulative cases by region on log10 scale
-country_cases_cumulative_log = function(cv_cases, start_point=c("Fecha", "Día del caso 100", "Día de la 10ma muerte"))  {
+country_cases_cumulative_log = function(cv_cases, start_point=c("Fecha", "Día del caso 100", "Día del caso 10", 
+                                                                "Día de la 10ma muerte", "Día de la 1ra muerte"))  {
   if (start_point=="Fecha") {
     g <- plot_ly(cv_cases, x = ~date, y = ~log10(outcome), type = 'scatter', mode = 'lines+markers', color = ~region, 
                  colors = country_cols) %>%
@@ -210,6 +317,19 @@ country_cases_cumulative_log = function(cv_cases, start_point=c("Fecha", "Día d
     g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
+  if (start_point=="Día del caso 10") {
+    cv_cases = subset(cv_cases, days_since_case10>0)
+    g = ggplot(cv_cases, aes(x = days_since_case10, y = outcome, colour = region, group = 1,
+                             text = paste0("Day ",days_since_case10, "\n", region, ": ",outcome))) +
+      xlab("Días desde el caso 10")
+    g1 = g + geom_line(alpha=0.8) + geom_point(size = 1, alpha = 0.8) +
+      ylab("casos acumulados (log10)") + theme_bw() +
+      scale_y_continuous(trans="log10") +
+      scale_colour_manual(values=country_cols) +
+      theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
+    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+  }
+  
   if (start_point=="Día de la 10ma muerte") {
     cv_cases = subset(cv_cases, days_since_death10>0)
     g = ggplot(cv_cases, aes(x = days_since_death10, y = outcome, colour = region, group = 1,
@@ -222,10 +342,24 @@ country_cases_cumulative_log = function(cv_cases, start_point=c("Fecha", "Día d
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
     g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
+  
+  if (start_point=="Día de la 1ra muerte") {
+    cv_cases = subset(cv_cases, days_since_death1>0)
+    g = ggplot(cv_cases, aes(x = days_since_death1, y = outcome, colour = region, group = 1,
+                             text = paste0("Day ",days_since_death1, "\n", region, ": ",outcome))) +
+      xlab("Días desde la 1ra muerte")
+    g1 = g + geom_line(alpha=0.8) + geom_point(size = 1, alpha = 0.8) +
+      ylab("casos acumulados (log10)") + theme_bw() +
+      scale_y_continuous(trans="log10") +
+      scale_colour_manual(values=country_cols) +
+      theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
+    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+  }
   g
 }
 
-country_cases_cumulative_log_prov = function(cv_cases, start_point=c("Fecha", "Día del caso 100", "Día de la 10ma muerte"))  {
+country_cases_cumulative_log_prov = function(cv_cases, start_point=c("Fecha", "Día del caso 100", "Día del caso 10", 
+                                                                     "Día de la 10ma muerte", "Día de la 1ra muerte"))  {
   if (start_point=="Fecha") {
     g <- plot_ly(cv_cases, x = ~date, y = ~log10(outcome), type = 'scatter', mode = 'lines+markers', color = ~region) %>%
       layout(xaxis = list(title = "fecha"), yaxis = list(title = "casos acumulados (log10)"), barmode = "stack")
@@ -244,11 +378,35 @@ country_cases_cumulative_log_prov = function(cv_cases, start_point=c("Fecha", "D
     g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
+  if (start_point=="Día del caso 10") {
+    cv_cases = subset(cv_cases, days_since_case10>0)
+    g = ggplot(cv_cases, aes(x = days_since_case10, y = outcome, colour = region, group = 1,
+                             text = paste0("Day ",days_since_case10, "\n", region, ": ",outcome))) +
+      xlab("Días desde el caso 10")
+    g1 = g + geom_line(alpha=0.8) + geom_point(size = 1, alpha = 0.8) +
+      ylab("casos acumulados (log10)") + theme_bw() +
+      scale_y_continuous(trans="log10") +
+      theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
+    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+  }
+  
   if (start_point=="Día de la 10ma muerte") {
     cv_cases = subset(cv_cases, days_since_death10>0)
     g = ggplot(cv_cases, aes(x = days_since_death10, y = outcome, colour = region, group = 1,
                              text = paste0("Day ",days_since_death10, "\n", region, ": ",outcome))) +
       xlab("Días desde la 10ma muerte")
+    g1 = g + geom_line(alpha=0.8) + geom_point(size = 1, alpha = 0.8) +
+      ylab("casos acumulados (log10)") + theme_bw() +
+      scale_y_continuous(trans="log10") +
+      theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
+    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+  }
+  
+  if (start_point=="Día de la 1ra muerte") {
+    cv_cases = subset(cv_cases, days_since_death1>0)
+    g = ggplot(cv_cases, aes(x = days_since_death1, y = outcome, colour = region, group = 1,
+                             text = paste0("Day ",days_since_death1, "\n", region, ": ",outcome))) +
+      xlab("Días desde la 1ra muerte")
     g1 = g + geom_line(alpha=0.8) + geom_point(size = 1, alpha = 0.8) +
       ylab("casos acumulados (log10)") + theme_bw() +
       scale_y_continuous(trans="log10") +
@@ -278,7 +436,12 @@ shinyServer(function(input, output, session) {
   })
   
   reactive_db_last24h_argentina = reactive({
-    cv_cases_argentina %>% filter(date == input$plot_date_argentina & new_cases>0)
+    # Este if porque sino el play no anda para los datos de Argentina
+    if(input$plot_date_argentina == "2020-03-04") {
+      cv_cases_argentina %>% filter(date == "2020-03-03" & new_cases>0)  
+    } else {
+      cv_cases_argentina %>% filter(date == input$plot_date_argentina & new_cases>0)  
+    }
   })
   
   reactive_db_large = reactive({
@@ -389,7 +552,7 @@ shinyServer(function(input, output, session) {
   })
   
   observeEvent(input$plot_date_argentina, {
-    
+    message(input$plot_date_argentina)    
     # Correccion cantidades
     poly <- reactive_polygons_argentina()
     argie <- reactive_db_large_argentina()
@@ -410,7 +573,6 @@ shinyServer(function(input, output, session) {
                        labelOptions = labelOptions(
                          style = list("font-weight" = "normal", padding = "3px 8px", "color" = covid_col),
                          textsize = "15px", direction = "auto")) %>%
-      
       addCircleMarkers(data = reactive_db_argentina(), lat = ~ latitude, lng = ~ longitude, weight = 1, radius = ~(cases)^(1/1.7),
                        fillOpacity = 0.1, color = covid_col, group = "2019-COVID (acumulados)",
                        label = sprintf("<strong>%s (acumulados)</strong><br/>Casos confirmados: %g<br/>Muertes: %d<br/>Casos cada 100,000: %g", 
@@ -429,7 +591,6 @@ shinyServer(function(input, output, session) {
   })
   
   # leaflet Proxy
-  #observeEvent(input$plot_date, {
   observeEvent(input$nav, {
     req(input$nav == "Mapa Mundial")
     leafletProxy("mymap") %>% 
@@ -593,6 +754,7 @@ shinyServer(function(input, output, session) {
   # ----------------------------------------------------
   # country-specific plots
   output$country_plot_arg <- renderPlotly({
+#    browser()
     country_cases_plot(country_reactive_db_arg(), start_point=input$start_date_arg)
   })
   
