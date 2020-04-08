@@ -581,6 +581,8 @@ shinyServer(function(input, output, session) {
                        labelOptions = labelOptions(
                          style = list("font-weight" = "normal", padding = "3px 8px", "color" = covid_col),
                          textsize = "15px", direction = "auto")) 
+    
+    
   })
   
   # ----------------------------------------------------
@@ -805,5 +807,7 @@ shinyServer(function(input, output, session) {
   output$country_plot_cumulative_log <- renderPlotly({
     country_cases_cumulative_log(country_reactive_db(), start_point=input$start_date)
   })
+  
+  waiter_hide()
   
 })

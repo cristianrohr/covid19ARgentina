@@ -8,6 +8,7 @@
 #
 
 hostname.sistema <- Sys.info()["nodename"]
+hostname.sistema <- "argentum"
 if(hostname.sistema == "argentum") {
   aboutPanel <- tabPanel("Acerca de este sitio",
                          tags$div(
@@ -126,13 +127,13 @@ library(shiny)
 
 # Define UI for application that draws a histogram
 shinyUI(
-  
   navbarPage(
-    #theme = shinytheme("flatly"),
     theme = tema,
     collapsible = TRUE,
              "Dashboard COVID-19 Argentina", id="nav",
              tabPanel("Mapa Argentina",
+                      use_waiter(),
+                      waiter_show_on_load(spin_flower(), color = "#161616"),
                       div(class="outer",
                           tags$head(includeCSS("styles.css"),
                                     setBackgroundColor(color = "ghostwhite"),
