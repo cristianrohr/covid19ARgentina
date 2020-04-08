@@ -156,8 +156,8 @@ basemap = leaflet(plot_map) %>%
     overlayGroups = c("2019-COVID (activos)", "2019-COVID (nuevos)", "2019-COVID (acumulados)"),
     options = layersControlOptions(collapsed = FALSE)) %>% 
   hideGroup(c("2019-COVID (nuevos)", "2019-COVID (acumulados)"))  %>%
-  #addProviderTiles(providers$CartoDB.Positron) %>%
-  addProviderTiles(providers$CartoDB.Voyager) %>%
+  addProviderTiles(providers$CartoDB.Positron) %>%
+  #addProviderTiles(providers$CartoDB.Voyager) %>%
   fitBounds(~-100,-50,~80,80) %>%
   addLegend("bottomright", pal = cv_pal, values = ~cv_large_countries$per100k,
             title = "<small>Casos activos cada 100,000</small>") #%>%
@@ -270,8 +270,8 @@ basemap_argentina = leaflet(plot_map_argentina) %>%
     overlayGroups = c("2019-COVID (acumulados)", "2019-COVID (nuevos)"),
     options = layersControlOptions(collapsed = FALSE)) %>% 
   hideGroup(c("2019-COVID (nuevos)"))  %>%
-  #addProviderTiles(providers$CartoDB.Positron) %>%
-  addProviderTiles(providers$CartoDB.Voyager) %>%
+  addProviderTiles(providers$CartoDB.Positron) %>%
+  #addProviderTiles(providers$CartoDB.Voyager) %>%
     addLegend("bottomright", pal = cv_pal_argentina, values = ~cv_large_countries_arg$per100k,
             title = "<small>Casos acumulados cada 100,000</small>") #%>%
 

@@ -162,7 +162,9 @@ shinyUI(
                           ),
                           links_redes1,
                           links_redes2
-                      )
+                      ),
+                      tags$br(),
+                      tags$br()
              ),
              tabPanel("Mapa Mundial",
                       div(class="outer",
@@ -197,7 +199,9 @@ shinyUI(
                           links_redes2
                           
                           
-                      )
+                      ),
+                      tags$br(),
+                      tags$br()
              ),
              
              
