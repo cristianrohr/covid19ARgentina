@@ -65,6 +65,7 @@ if(hostname.sistema == "argentum") {
                                 actionButton("twitter_share", label = "", icon = icon("twitter"),style='padding:5px',
                                              onclick = sprintf("window.open('%s')",
                                                                "https://twitter.com/HeritasArg")))
+  intervaloanimacion <- 4000
 } else {
   aboutPanel <- tabPanel("Acerca de este sitio",
                          tags$div(
@@ -119,7 +120,7 @@ if(hostname.sistema == "argentum") {
                                 actionButton("twitter_share", label = "", icon = icon("twitter"),style='padding:5px',
                                              onclick = sprintf("window.open('%s')",
                                                                "https://twitter.com/cristianrohr")))
-  
+  intervaloanimacion <- 2000
 }
 
 
@@ -156,7 +157,7 @@ shinyUI(
                                                     max = as.Date(current_date_argentina,"%Y-%m-%d"),
                                                     value = as.Date(current_date_argentina),
                                                     timeFormat = "%d %b",
-                                                    animate=animationOptions(interval = 2000, loop = FALSE,
+                                                    animate=animationOptions(interval = intervaloanimacion, loop = FALSE,
                                                                              playButton = icon('play', "fa-2x"))),
                                         tags$i(h6("Click en botón PLAY (botón azul) para animación de evolución de casos."))
                           ),
@@ -189,7 +190,7 @@ shinyUI(
                                                     max = as.Date(current_date,"%Y-%m-%d"),
                                                     value = as.Date(current_date),
                                                     timeFormat = "%d %b", 
-                                                    animate=animationOptions(interval = 2000, loop = FALSE,
+                                                    animate=animationOptions(interval = intervaloanimacion, loop = FALSE,
                                                                              playButton = icon('play', "fa-2x"))),
                                         tags$i(h6("Click en botón PLAY (botón azul) para animación de evolución de casos.")),
                                         style = "z-index: 420;"
