@@ -65,7 +65,7 @@ if(hostname.sistema == "argentum") {
                                 actionButton("twitter_share", label = "", icon = icon("twitter"),style='padding:5px',
                                              onclick = sprintf("window.open('%s')",
                                                                "https://twitter.com/HeritasArg")))
-  intervaloanimacion <- 2500
+  intervaloanimacion <- 3000
 } else {
   aboutPanel <- tabPanel("Acerca de este sitio",
                          tags$div(
