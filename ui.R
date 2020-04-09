@@ -8,7 +8,7 @@
 #
 
 hostname.sistema <- Sys.info()["nodename"]
-hostname.sistema <- "argentum"
+#hostname.sistema <- "argentum"
 if(hostname.sistema == "argentum") {
   aboutPanel <- tabPanel("Acerca de este sitio",
                          tags$div(
