@@ -65,7 +65,7 @@ if(hostname.sistema == "argentum") {
                                 actionButton("twitter_share", label = "", icon = icon("twitter"),style='padding:5px',
                                              onclick = sprintf("window.open('%s')",
                                                                "https://twitter.com/HeritasArg")))
-  intervaloanimacion <- 4000
+  intervaloanimacion <- 2500
 } else {
   aboutPanel <- tabPanel("Acerca de este sitio",
                          tags$div(
@@ -223,9 +223,9 @@ shinyUI(
                         ),
                         mainPanel(
                           tabsetPanel(
-                            tabPanel("Diarios", plotlyOutput("country_plot_arg")),
-                            tabPanel("Acumulado", plotlyOutput("country_plot_cumulative_arg")),
-                            tabPanel("Acumulado (log10)", plotlyOutput("country_plot_cumulative_log_arg"))
+                            tabPanel("Diarios", plotlyOutput("country_plot_arg", height = "550px", width = "100%")),
+                            tabPanel("Acumulado", plotlyOutput("country_plot_cumulative_arg", height = "550px", width = "100%")),
+                            tabPanel("Acumulado (log10)", plotlyOutput("country_plot_cumulative_log_arg", height = "550px", width = "100%"))
                           )
                         )
                       )
@@ -257,9 +257,9 @@ shinyUI(
                         
                         mainPanel(
                           tabsetPanel(
-                            tabPanel("Diarios", plotlyOutput("country_plot_prov")),
-                            tabPanel("Acumulado", plotlyOutput("country_plot_cumulative_prov")),
-                            tabPanel("Acumulado (log10)", plotlyOutput("country_plot_cumulative_log_prov"))
+                            tabPanel("Diarios", plotlyOutput("country_plot_prov", height = "550px", width = "100%")),
+                            tabPanel("Acumulado", plotlyOutput("country_plot_cumulative_prov", height = "550px", width = "100%")),
+                            tabPanel("Acumulado (log10)", plotlyOutput("country_plot_cumulative_log_prov", height = "550px", width = "100%"))
                           )
                         )
                       )
@@ -296,9 +296,9 @@ shinyUI(
                         
                         mainPanel(
                           tabsetPanel(
-                            tabPanel("Diarios", plotlyOutput("country_plot")),
-                            tabPanel("Acumulado", plotlyOutput("country_plot_cumulative")),
-                            tabPanel("Acumulado (log10)", plotlyOutput("country_plot_cumulative_log"))
+                            tabPanel("Diarios", plotlyOutput("country_plot", height = "550px", width = "100%")),
+                            tabPanel("Acumulado", plotlyOutput("country_plot_cumulative", height = "550px", width = "100%")),
+                            tabPanel("Acumulado (log10)", plotlyOutput("country_plot_cumulative_log", height = "550px", width = "100%"))
                           )
                         )
                       )

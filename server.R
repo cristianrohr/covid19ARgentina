@@ -59,7 +59,7 @@ country_cases_plot = function(cv_cases, start_point=c("Fecha", "Día del caso 10
       ylab("nuevos casos") + theme_bw() +
       scale_fill_manual(values=country_cols) +
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
   if (start_point=="Día del caso 10") {
@@ -73,7 +73,7 @@ country_cases_plot = function(cv_cases, start_point=c("Fecha", "Día del caso 10
       ylab("nuevos casos") + theme_bw() +
       scale_fill_manual(values=country_cols) +
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
   if (start_point=="Día de la 10ma muerte") {
@@ -87,7 +87,8 @@ country_cases_plot = function(cv_cases, start_point=c("Fecha", "Día del caso 10
       ylab("nuevos casos") + theme_bw() +
       scale_fill_manual(values=country_cols) +
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
   if (start_point=="Día de la 1ra muerte") {
@@ -101,7 +102,8 @@ country_cases_plot = function(cv_cases, start_point=c("Fecha", "Día del caso 10
       ylab("nuevos casos") + theme_bw() +
       scale_fill_manual(values=country_cols) +
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   g
 }
@@ -126,7 +128,8 @@ country_cases_plot_prov = function(cv_cases, start_point=c("Fecha", "Día del ca
       ylab("nuevos casos") + theme_bw() +
       #scale_fill_manual(values=country_cols) +
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
   if (start_point=="Día del caso 10") {
@@ -140,7 +143,8 @@ country_cases_plot_prov = function(cv_cases, start_point=c("Fecha", "Día del ca
       ylab("nuevos casos") + theme_bw() +
       #scale_fill_manual(values=country_cols) +
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
   if (start_point=="Día de la 10ma muerte") {
@@ -154,7 +158,8 @@ country_cases_plot_prov = function(cv_cases, start_point=c("Fecha", "Día del ca
       ylab("nuevos casos") + theme_bw() +
      # scale_fill_manual(values=country_cols) +
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
   if (start_point=="Día de la 1ra muerte") {
@@ -168,7 +173,8 @@ country_cases_plot_prov = function(cv_cases, start_point=c("Fecha", "Día del ca
       ylab("nuevos casos") + theme_bw() +
       # scale_fill_manual(values=country_cols) +
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   g
 }
@@ -196,7 +202,8 @@ country_cases_cumulative = function(cv_cases,
       ylab("casos acumulados") + theme_bw() + 
       scale_colour_manual(values=country_cols) +
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
   if (start_point=="Día del caso 10") {
@@ -208,7 +215,8 @@ country_cases_cumulative = function(cv_cases,
       ylab("casos acumulados") + theme_bw() + 
       scale_colour_manual(values=country_cols) +
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
   if (start_point=="Día de la 10ma muerte") {
@@ -220,7 +228,8 @@ country_cases_cumulative = function(cv_cases,
       ylab("casos acumulados") + theme_bw() + 
       scale_colour_manual(values=country_cols) +
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
   if (start_point=="Día de la 1ra muerte") {
@@ -232,7 +241,8 @@ country_cases_cumulative = function(cv_cases,
       ylab("casos acumulados") + theme_bw() + 
       scale_colour_manual(values=country_cols) +
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
   g
@@ -255,7 +265,8 @@ country_cases_cumulative_prov = function(cv_cases,
     g1 = g + geom_line(alpha=0.8) + geom_point(size = 1, alpha = 0.8) +
       ylab("casos acumulados") + theme_bw() + 
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
   if (start_point=="Día del caso 10") {
@@ -266,7 +277,8 @@ country_cases_cumulative_prov = function(cv_cases,
     g1 = g + geom_line(alpha=0.8) + geom_point(size = 1, alpha = 0.8) +
       ylab("casos acumulados") + theme_bw() + 
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
   if (start_point=="Día de la 10ma muerte") {
@@ -277,7 +289,8 @@ country_cases_cumulative_prov = function(cv_cases,
     g1 = g + geom_line(alpha=0.8) + geom_point(size = 1, alpha = 0.8) +
       ylab("casos acumulados") + theme_bw() + 
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
   if (start_point=="Día de la 1ra muerte") {
@@ -288,7 +301,8 @@ country_cases_cumulative_prov = function(cv_cases,
     g1 = g + geom_line(alpha=0.8) + geom_point(size = 1, alpha = 0.8) +
       ylab("casos acumulados") + theme_bw() + 
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
   g
@@ -314,7 +328,8 @@ country_cases_cumulative_log = function(cv_cases, start_point=c("Fecha", "Día d
       scale_y_continuous(trans="log10") +
       scale_colour_manual(values=country_cols) +
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
   if (start_point=="Día del caso 10") {
@@ -327,7 +342,8 @@ country_cases_cumulative_log = function(cv_cases, start_point=c("Fecha", "Día d
       scale_y_continuous(trans="log10") +
       scale_colour_manual(values=country_cols) +
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+   # g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
   if (start_point=="Día de la 10ma muerte") {
@@ -340,7 +356,8 @@ country_cases_cumulative_log = function(cv_cases, start_point=c("Fecha", "Día d
       scale_y_continuous(trans="log10") +
       scale_colour_manual(values=country_cols) +
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
   if (start_point=="Día de la 1ra muerte") {
@@ -353,7 +370,8 @@ country_cases_cumulative_log = function(cv_cases, start_point=c("Fecha", "Día d
       scale_y_continuous(trans="log10") +
       scale_colour_manual(values=country_cols) +
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   g
 }
@@ -375,7 +393,8 @@ country_cases_cumulative_log_prov = function(cv_cases, start_point=c("Fecha", "D
       ylab("casos acumulados (log10)") + theme_bw() +
       scale_y_continuous(trans="log10") +
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
   if (start_point=="Día del caso 10") {
@@ -387,7 +406,8 @@ country_cases_cumulative_log_prov = function(cv_cases, start_point=c("Fecha", "D
       ylab("casos acumulados (log10)") + theme_bw() +
       scale_y_continuous(trans="log10") +
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
   if (start_point=="Día de la 10ma muerte") {
@@ -399,7 +419,8 @@ country_cases_cumulative_log_prov = function(cv_cases, start_point=c("Fecha", "D
       ylab("casos acumulados (log10)") + theme_bw() +
       scale_y_continuous(trans="log10") +
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   
   if (start_point=="Día de la 1ra muerte") {
@@ -411,7 +432,8 @@ country_cases_cumulative_log_prov = function(cv_cases, start_point=c("Fecha", "D
       ylab("casos acumulados (log10)") + theme_bw() +
       scale_y_continuous(trans="log10") +
       theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10))
-    g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    #g <- ggplotly(g1, tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
+    g <- ggplotly(g1, , tooltip = c("text")) %>% layout(legend = list(font = list(size=11)))
   }
   g
 }
