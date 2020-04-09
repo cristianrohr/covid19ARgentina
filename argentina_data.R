@@ -6,11 +6,6 @@
 
 
 # load libraries
-if(!require(stringr)) install.packages("stringr", repos = "http://cran.us.r-project.org")
-if(!require(stringi)) install.packages("stringi", repos = "http://cran.us.r-project.org")
-if(!require(dplyr)) install.packages("dplyr", repos = "http://cran.us.r-project.org")
-if(!require(rgdal)) install.packages("rgdal", repos = "http://cran.us.r-project.org")
-
 update_argentina = function(input_df, tag) {
   names(input_df)[1:2] = c("Province", "Country")
   input_df$Country = input_df$Country %>% str_replace_all(., " ", "") 
@@ -74,10 +69,15 @@ write.csv(argentina_merge, "input_data/argentina_data.csv")
 # file <- file.path(".", "input_data",basename(url))
 # download.file(url, file)
 # unzip(file, exdir = tmp)
-
 # Leo el Shapefile de Argentina
-argentina <- readOGR(dsn = "input_data/mapa_argentina/", layer = "ARG_adm1", use_iconv=TRUE, encoding='UTF-8', stringsAsFactors=FALSE)
-countries = read.csv("input_data/countries_codes_and_coordinates.csv")
+#argentina <- readOGR(dsn = "input_data/mapa_argentina/", layer = "ARG_adm1", use_iconv=TRUE, encoding='UTF-8', stringsAsFactors=FALSE)
+
+# Creo mi propio shapefile mas liviano
+# Provincias <- getData('GADM', country='ARG', level=1) # Cargar datos de Provincias
+# ProvinciasSimple <- gSimplify(Provincias, tol = 0.1 , topologyPreserve = TRUE) # reducir complejidad
+# ProvinciasSimple <- SpatialPolygonsDataFrame(ProvinciasSimple, data.frame(Provincias))
+# saveRDS(ProvinciasSimple, "input_data/mapa_argentina.rds")
+argentina <- readRDS("input_data/mapa_argentina.rds")
 provincias <- argentina@data
 
 collated_data_argentina = NULL
@@ -185,10 +185,7 @@ collated_data_argentina[collated_data_argentina$argentina_ID == "Santiago.del.Es
 collated_data_argentina[collated_data_argentina$argentina_ID == "Tierra.del.Fuego","argentina_ID"] <- "Tierra del Fuego"
 collated_data_argentina[collated_data_argentina$argentina_ID == "Tucuman","argentina_ID"] <- "Tucumán"
 
-#collated_data_argentina = merge(collated_data_argentina, provincias[,c("argentina_ID", "country")], by = "argentina_ID")
-
 # re-order
-#collated_data_argentina = collated_data_argentina[order(as.Date(collated_data_argentina$date, format="%Y-%m-%d"), -collated_data_argentina$cases, collated_data_argentina$country),]
 collated_data_argentina = collated_data_argentina[order(as.Date(collated_data_argentina$date, format="%Y-%m-%d"), -collated_data_argentina$cases),]
 
 # update time stamp

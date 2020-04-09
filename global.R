@@ -20,7 +20,8 @@ countries = read.csv("input_data/countries_codes_and_coordinates.csv")
 worldcountry = geojson_read("input_data/countries.geo.json", what = "sp")
 
 # Información de Argentina
-argentina <- readOGR(dsn = "input_data/mapa_argentina/", layer = "ARG_adm1", use_iconv=TRUE, encoding='UTF-8', stringsAsFactors=FALSE)
+argentina <- readRDS("input_data/mapa_argentina.rds")
+
 provincias <- argentina@data
 provincias_coord <- read.csv("input_data/provincias.csv", header = T, sep = ",")
 

@@ -4,11 +4,6 @@
 ## data extracted from Johns Hopkins data obtained from following Github repository
 # https://github.com/CSSEGISandData/COVID-19
 
-# load libraries
-if(!require(stringr)) install.packages("stringr", repos = "http://cran.us.r-project.org")
-if(!require(stringi)) install.packages("stringi", repos = "http://cran.us.r-project.org")
-if(!require(dplyr)) install.packages("dplyr", repos = "http://cran.us.r-project.org")
-
 # function to update jhu input data according to mapping base format
 update_jhu = function(input_df, tag) {
   names(input_df)[1:2] = c("Province", "Country")
@@ -168,4 +163,6 @@ collated_data$last_update[nrow(collated_data)] = paste(format(as.POSIXlt(Sys.tim
 
 # save file
 write.csv(collated_data, "input_data/coronavirus.csv", row.names=F)
+
 rm(list = ls())
+

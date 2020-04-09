@@ -18,3 +18,7 @@ if(!require(rgdal)) install.packages("rgdal", repos = "http://cran.us.r-project.
 if(!require(viridis)) install.packages("viridis", repos = "http://cran.us.r-project.org")
 if(!require(shinyWidgets)) install.packages("shinyWidgets", repos = "http://cran.us.r-project.org")
 if(!require(waiter)) install.packages("waiter", repos = "http://cran.us.r-project.org")
+if(!require(profvis)) install.packages("profvis", repos = "http://cran.us.r-project.org")
+if(!require(stringr)) install.packages("stringr", repos = "http://cran.us.r-project.org")
+if(!require(stringi)) install.packages("stringi", repos = "http://cran.us.r-project.org")
+if(!require(dplyr)) install.packages("dplyr", repos = "http://cran.us.r-project.org")

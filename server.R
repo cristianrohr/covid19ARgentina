@@ -416,7 +416,6 @@ country_cases_cumulative_log_prov = function(cv_cases, start_point=c("Fecha", "D
   g
 }
 
-
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
    
@@ -490,44 +489,36 @@ shinyServer(function(input, output, session) {
   # ----------------------------------------------------
   # Fecha
   output$clean_date_reactive <- renderText({
-    #format(as.POSIXct(input$plot_date),"%d %B %Y")
     format(input$plot_date,"%d %B %Y")
   })
   
   output$reactive_case_count <- renderText({
     paste0(prettyNum(sum(reactive_db()$cases), big.mark=","), " casos")
   })
-  
-  output$reactive_case_count_argentina <- renderText({
-    paste0(prettyNum(sum(reactive_db_argentina()$cases), big.mark=","), " casos")
-  })
-  
   output$reactive_death_count <- renderText({
     paste0(prettyNum(sum(reactive_db()$death), big.mark=","), " muertes")
   })
-  
-  output$reactive_death_count_argentina <- renderText({
-    paste0(prettyNum(sum(reactive_db_argentina()$death), big.mark=","), " muertes")
-  })
-  
-  output$reactive_recovered_count_arg <- renderText({
-    paste0(prettyNum(sum(reactive_db_argentina()$recovered), big.mark=","), " recuperados")
-  })
-  
   output$reactive_recovered_count <- renderText({
     paste0(prettyNum(sum(reactive_db()$recovered), big.mark=","), " recuperados")
   })
-  
-  output$reactive_active_count_arg <- renderText({
-    paste0(prettyNum(sum(reactive_db_argentina()$active_cases), big.mark=","), " casos activos")
-  })
-  
   output$reactive_active_count <- renderText({
     paste0(prettyNum(sum(reactive_db()$active_cases), big.mark=","), " casos activos")
   })
-  
   output$reactive_country_count <- renderText({
     paste0(nrow(subset(reactive_db(), country!="Diamond Princess Cruise Ship")), " países/regiones afectados")
+  })
+  # Outputs reactivos de Argentina
+  output$reactive_case_count_argentina <- renderText({
+    paste0(prettyNum(sum(reactive_db_argentina()$cases), big.mark=","), " casos")
+  })
+  output$reactive_death_count_argentina <- renderText({
+    paste0(prettyNum(sum(reactive_db_argentina()$death), big.mark=","), " muertes")
+  })
+  output$reactive_recovered_count_arg <- renderText({
+    paste0(prettyNum(sum(reactive_db_argentina()$recovered), big.mark=","), " recuperados")
+  })
+  output$reactive_active_count_arg <- renderText({
+    paste0(prettyNum(sum(reactive_db_argentina()$active_cases), big.mark=","), " casos activos")
   })
   
   output$reactive_new_cases_24h <- renderText({
@@ -541,9 +532,7 @@ shinyServer(function(input, output, session) {
     valorusar <- format(valor ,big.mark=",",scientific=FALSE)
     paste0(valorusar, " nuevos en las últimas 24 horas")
   })
-  
 
-  
   # ----------------------------------------------------
   # Mapa Argentina
   # ----------------------------------------------------
@@ -552,22 +541,25 @@ shinyServer(function(input, output, session) {
   })
   
   observeEvent(input$plot_date_argentina, {
-    message(input$plot_date_argentina)    
+    req(input$nav == "Mapa Argentina")
+    # message(input$plot_date_argentina)    
+    # if(input$plot_date_argentina == "2020-04-03") {
+    #   browser()
+    # }
     # Correccion cantidades
     poly <- reactive_polygons_argentina()
     argie <- reactive_db_large_argentina()
     tmp <- merge(poly[,c("NAME_1", "per100k")], argie[,c("argentina_ID", "per100k")], by.x = "NAME_1", by.y = "argentina_ID")
     poly@data$per100k <- tmp@data$per100k.y # Ahora si actualizado
-    
+
     leafletProxy("mymap_argentina") %>% 
       clearMarkers() %>%
       clearShapes() %>%
       #addPolygons(data = reactive_polygons_argentina(), stroke = FALSE, smoothFactor = 0.1, fillOpacity = 0.15, fillColor = ~cv_pal_argentina(reactive_db_large_argentina()$per100k)) %>%
-      #addPolygons(data = reactive_polygons_argentina(), stroke = FALSE, smoothFactor = 0.1, fillOpacity = 0.15, fillColor = ~cv_pal_argentina(reactive_polygons_argentina()$per100k)) %>%
       addPolygons(data = poly, stroke = FALSE, smoothFactor = 0.1, fillOpacity = 0.15, fillColor = ~cv_pal_argentina(poly@data$per100k)) %>%
       addCircleMarkers(data = reactive_db_last24h_argentina(), lat = ~ latitude, lng = ~ longitude, weight = 1, radius = ~(new_cases)^(1/1.7),
                        fillOpacity = 0.1, color = covid_col, group = "2019-COVID (nuevos)",
-                       label = sprintf("<strong>%s (últimas 24h)</strong><br/>Casos confirmados: %g<br/>Muertes: %d<br/>Casos cada 100,000: %g", 
+                       label = sprintf("<strong>%s (últimas 24h)</strong><br/>Casos confirmados: %g<br/>Muertes: %d<br/>Casos cada 100,000: %g",
                                        reactive_db_last24h_argentina()$argentina_ID, reactive_db_last24h_argentina()$new_cases, reactive_db_last24h_argentina()$new_deaths,
                                        reactive_db_last24h_argentina()$newper100k) %>% lapply(htmltools::HTML),
                        labelOptions = labelOptions(
@@ -575,13 +567,12 @@ shinyServer(function(input, output, session) {
                          textsize = "15px", direction = "auto")) %>%
       addCircleMarkers(data = reactive_db_argentina(), lat = ~ latitude, lng = ~ longitude, weight = 1, radius = ~(cases)^(1/1.7),
                        fillOpacity = 0.1, color = covid_col, group = "2019-COVID (acumulados)",
-                       label = sprintf("<strong>%s (acumulados)</strong><br/>Casos confirmados: %g<br/>Muertes: %d<br/>Casos cada 100,000: %g", 
+                       label = sprintf("<strong>%s (acumulados)</strong><br/>Casos confirmados: %g<br/>Muertes: %d<br/>Casos cada 100,000: %g",
                                        reactive_db_argentina()$argentina_ID, reactive_db_argentina()$cases, reactive_db_argentina()$deaths,
                                        reactive_db_argentina()$per100k) %>% lapply(htmltools::HTML),
                        labelOptions = labelOptions(
                          style = list("font-weight" = "normal", padding = "3px 8px", "color" = covid_col),
-                         textsize = "15px", direction = "auto")) 
-    
+                         textsize = "15px", direction = "auto"))
     
   })
   
@@ -598,27 +589,27 @@ shinyServer(function(input, output, session) {
     leafletProxy("mymap") %>% 
       clearMarkers() %>%
       clearShapes() %>%
-      addPolygons(data = reactive_polygons(), stroke = FALSE, smoothFactor = 0.1, fillOpacity = 0.15, fillColor = ~cv_pal(reactive_db_large()$activeper100k)) %>% 
-      addCircleMarkers(data = reactive_db_last24h(), lat = ~ latitude, lng = ~ longitude, weight = 1, radius = ~(new_cases)^(1/4), 
+      addPolygons(data = reactive_polygons(), stroke = FALSE, smoothFactor = 0.1, fillOpacity = 0.15, fillColor = ~cv_pal(reactive_db_large()$activeper100k)) %>%
+      addCircleMarkers(data = reactive_db_last24h(), lat = ~ latitude, lng = ~ longitude, weight = 1, radius = ~(new_cases)^(1/4),
                        fillOpacity = 0.1, color = covid_col, group = "2019-COVID (nuevos)",
                        label = sprintf("<strong>%s (últimas 24h)</strong><br/>Casos confirmados: %g<br/>Muertes: %d<br/>Recuperados: %d<br/>Casos cada 100,000: %g", reactive_db_last24h()$country, reactive_db_last24h()$new_cases, reactive_db_last24h()$new_deaths, reactive_db_last24h()$new_recovered, reactive_db_last24h()$newper100k) %>% lapply(htmltools::HTML),
                        labelOptions = labelOptions(
                          style = list("font-weight" = "normal", padding = "3px 8px", "color" = covid_col),
                          textsize = "15px", direction = "auto")) %>%
-      
-      addCircleMarkers(data = reactive_db(), lat = ~ latitude, lng = ~ longitude, weight = 1, radius = ~(cases)^(1/4), 
+
+      addCircleMarkers(data = reactive_db(), lat = ~ latitude, lng = ~ longitude, weight = 1, radius = ~(cases)^(1/4),
                        fillOpacity = 0.1, color = covid_col, group = "2019-COVID (acumulados)",
                        label = sprintf("<strong>%s (acumulados)</strong><br/>Casos confirmados: %g<br/>Muertes: %d<br/>Recuperados: %d<br/>Casos cada 100,000: %g", reactive_db()$country, reactive_db()$cases, reactive_db()$deaths,reactive_db()$recovered, reactive_db()$per100k) %>% lapply(htmltools::HTML),
                        labelOptions = labelOptions(
                          style = list("font-weight" = "normal", padding = "3px 8px", "color" = covid_col),
                          textsize = "15px", direction = "auto")) %>%
-      
-      addCircleMarkers(data = reactive_db(), lat = ~ latitude, lng = ~ longitude, weight = 1, radius = ~(active_cases)^(1/4), 
+
+      addCircleMarkers(data = reactive_db(), lat = ~ latitude, lng = ~ longitude, weight = 1, radius = ~(active_cases)^(1/4),
                        fillOpacity = 0.1, color = covid_col, group = "2019-COVID (activos)",
                        label = sprintf("<strong>%s (activos)</strong><br/>Casos confirmados: %g<br/>Casos cada 100,000: %g<br/><i><small>Se excluyen individuos<br/>recuperados (%g) o muertos (%g).</small></i>", reactive_db()$country, reactive_db()$active_cases, reactive_db()$activeper100k, reactive_db()$recovered, reactive_db()$deaths) %>% lapply(htmltools::HTML),
                        labelOptions = labelOptions(
                          style = list("font-weight" = "normal", padding = "3px 8px", "color" = covid_col),
-                         textsize = "15px", direction = "auto")) 
+                         textsize = "15px", direction = "auto"))
   })
   
   observeEvent(input$plot_date, {
@@ -811,3 +802,4 @@ shinyServer(function(input, output, session) {
   waiter_hide()
   
 })
+
